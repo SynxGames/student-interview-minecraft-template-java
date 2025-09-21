@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("com.gradleup.shadow") version "9.1.0"
-    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'me.candidate.miniproject'
@@ -22,7 +21,15 @@ dependencies {
     // Cloud Command Framework
     implementation 'org.incendo:cloud-paper:2.0.0-beta.10'
     implementation 'org.incendo:cloud-annotations:2.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // Triumph GUI
+    implementation ("dev.triumphteam:triumph-gui:3.1.11") {
+        exclude group: "net.kyori"
+    }
+
+    implementation ('org.spongepowered:configurate-yaml:4.2.0') {
+        exclude group: "com.google.gson"
+    }
 }
 
 tasks {
@@ -44,6 +51,9 @@ tasks {
         relocate("xyz.jpenilla.reflectionremapper", "me.candidate.miniproject.libs.reflectionremapper")
         relocate("net.fabricmc.mappingio", "me.candidate.miniproject.libs.mappingio")
 
+        relocate("dev.triumphteam.gui", "me.candidate.miniproject.libs.triumphgui")
+
+        relocate("org.spongepowered.configurate", "me.candidate.miniproject.libs.configurate")
     }
 
     // The build task needs to depend on shadowJar so that we get a jar with dependencies included
@@ -67,7 +77,4 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
-}
-kotlin {
-    jvmToolchain(21)
 }
