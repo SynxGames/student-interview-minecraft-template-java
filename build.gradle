@@ -27,8 +27,12 @@ dependencies {
         exclude group: "net.kyori"
     }
 
-    implementation ('org.spongepowered:configurate-yaml:4.2.0') {
+    implementation ('org.spongepowered:configurate-yaml:4.1.0') {
         exclude group: "com.google.gson"
+    }
+
+    implementation ("com.zaxxer:HikariCP:7.0.2") {
+        exclude group: "org.slf4j"
     }
 }
 
@@ -54,6 +58,10 @@ tasks {
         relocate("dev.triumphteam.gui", "me.candidate.miniproject.libs.triumphgui")
 
         relocate("org.spongepowered.configurate", "me.candidate.miniproject.libs.configurate")
+
+        relocate("com.zaxxer", "me.candidate.miniproject.libs.hikari")
+
+        relocate("org.yaml.snakeyaml", "me.candidate.miniproject.libs.snakeyaml")
     }
 
     // The build task needs to depend on shadowJar so that we get a jar with dependencies included

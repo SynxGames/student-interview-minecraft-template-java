@@ -1,6 +1,8 @@
 package me.candidate.miniproject.scaffold.command.example;
 
+import me.candidate.miniproject.MiniProjectPlugin;
 import me.candidate.miniproject.scaffold.command.AnnotationCommand;
+import me.candidate.miniproject.scaffold.config.example.ExampleConfig;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.incendo.cloud.annotations.Command;
@@ -8,6 +10,12 @@ import org.incendo.cloud.annotations.CommandDescription;
 import org.incendo.cloud.annotations.Permission;
 
 public class ExampleCommand implements AnnotationCommand {
+
+    private final MiniProjectPlugin plugin;
+
+    public ExampleCommand(MiniProjectPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Command("scaffold test")
     @Permission("miniproject.scaffold.test")
@@ -20,6 +28,9 @@ public class ExampleCommand implements AnnotationCommand {
 
         // Send the message to the player
         sender.sendMessage(parsedMessage);
+
+        // Maybe we want to send a configuration-based message instead?
+        plugin.configScaffold().getConfig(ExampleConfig.class).someMessage().send(sender);
 
     }
 
